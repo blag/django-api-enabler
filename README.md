@@ -4,7 +4,7 @@ Why?
 ====
 - Do you use multiple apps in your django project?
 - Do you use the conventional django way of managing your urlconfs (where you include other urlconfs to your apps)?
-- Do you wish to have URL prefix like '/api/' followed by your custom app prefix?
+- Do you wish to have URL prefix like '/api/' followed by your custom app prefix, or do you want to include all model slugs after '/api/'?
 - Do you like to keep the URLconf at the app level for individual mappings?
 
 If your answer is Yes to all, then this app is for you.
@@ -13,27 +13,27 @@ What?
 =====
 In simplest way, when your have your urlconf like:
 
-urlpatterns = patterns('',
-    # ... snip ...
-    (r'^accounts/', include('accounts.urls')),
-    (r'^analytics/', include('analytics.urls')),
-    (r'^search/', include('search.urls')),
-    (r'^r/', include('inventory.urls')),
-    # ... snip ...
-)
+    urlpatterns = patterns('',
+        # ... snip ...
+        (r'^accounts/', include('accounts.urls')),
+        (r'^analytics/', include('analytics.urls')),
+        (r'^search/', include('search.urls')),
+        (r'^r/', include('inventory.urls')),
+        # ... snip ...
+    )
 
 And you want to have APIs associated with different apps in your project like:
-/api/accounts/
-/api/analytics/
-/api/search/
-# ... and more ...
+    /api/accounts/
+    /api/analytics/
+    /api/search/
+    # ... and more ...
 
 or if you want to have APIs associated with each app's models like:
-/api/users/
-/api/users/?search=<search_query>
-/api/accounts/
-/api/projects/
-# ... and more ...
+    /api/users/
+    /api/users/?search=<search_query>
+    /api/accounts/
+    /api/projects/
+    # ... and more ...
 
 where the mapping to views remains within the individual apps.
 
@@ -44,7 +44,7 @@ How to use?
 - Add a api.py urlconf module to each of the apps where you want API urls enabled. (* See below)
 - API_URL_PREFIX in {{ app_name }}/api.py should be set to a custom url-slug to use as prefix for the app, or API_URL_VIEWSETS in {{ app_name }}/api.py should include a mapping between app model slugs and model viewsets.
 
-* If you want to enable APIs in your accounts app your accounts/api.py file should look like:
+* If you want to enable APIs in your accounts app your `accounts/api.py` file should look like:
 	from django.conf.urls.defaults import patterns, include, url
 	
 	urlpatterns = patterns('accounts.views.apis',
@@ -57,7 +57,8 @@ How to use?
 	
 	API_URL_PREFIX = 'accounts'
 
-* Or, if you are using viewsets and routers from Django REST Framework, you can utilize the API_URL_VIEWSETS variable in api.py like so:
+* Or, if you are using viewsets and routers from Django REST Framework, you can utilize the API_URL_VIEWSETS variable in `accounts/api.py` like so:
+
     from django.conf.urls.defaults import patterns, include, url
     
     from rest_framework import permissions, viewsets
