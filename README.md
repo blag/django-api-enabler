@@ -23,12 +23,14 @@ In simplest way, when your have your urlconf like:
     )
 
 And you want to have APIs associated with different apps in your project like:
+
     /api/accounts/
     /api/analytics/
     /api/search/
     # ... and more ...
 
 or if you want to have APIs associated with each app's models like:
+
     /api/users/
     /api/users/?search=<search_query>
     /api/accounts/
@@ -45,17 +47,18 @@ How to use?
 - API_URL_PREFIX in {{ app_name }}/api.py should be set to a custom url-slug to use as prefix for the app, or API_URL_VIEWSETS in {{ app_name }}/api.py should include a mapping between app model slugs and model viewsets.
 
 * If you want to enable APIs in your accounts app your `accounts/api.py` file should look like:
-	from django.conf.urls.defaults import patterns, include, url
-	
-	urlpatterns = patterns('accounts.views.apis',
-		...
-	    url(r'^register/$', 'api_register_handler'),
-	    url(r'^login/$', 'api_login_handler'),
-	    url(r'^logout/$', 'api_logout_handler'),
-		...
-	)
-	
-	API_URL_PREFIX = 'accounts'
+
+    from django.conf.urls.defaults import patterns, include, url
+    
+    urlpatterns = patterns('accounts.views.apis',
+        ...
+        url(r'^register/$', 'api_register_handler'),
+        url(r'^login/$', 'api_login_handler'),
+        url(r'^logout/$', 'api_logout_handler'),
+        ...
+    )
+    
+    API_URL_PREFIX = 'accounts'
 
 * Or, if you are using viewsets and routers from Django REST Framework, you can utilize the API_URL_VIEWSETS variable in `accounts/api.py` like so:
 
@@ -75,7 +78,7 @@ How to use?
         permission_classes = (
             IsUser,
         )
-     
+    
     class AccountViewSet(viewsets.ModelViewSet):
         """
         This viewset wraps account information not used for authentication
